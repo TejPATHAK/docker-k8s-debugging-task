@@ -1,0 +1,33 @@
+context: |
+  A small Node.js web app is containerized with Docker and deployed on Kubernetes.
+  However, the Dockerfile is broken and the container does not build or run correctly.
+
+objectives:
+  - Fix the Dockerfile so the app builds successfully.
+  - Ensure the app runs and returns the correct output on port 3000.
+  - Verify that environment variables are respected.
+  - Deploy the fixed image using the provided Kubernetes manifests.
+
+constraints:
+  max_agent_timeout_sec: 300
+  max_test_timeout_sec: 60
+
+acceptance_criteria:
+  - Dockerfile builds without errors.
+  - Running container serves "Hello from container!" by default.
+  - Environment variable MESSAGE overrides output correctly.
+  - Port 3000 exposed and reachable.
+  - Kubernetes Deployment and Service apply successfully.
+  - Pod reaches Running state.
+
+inputs:
+  - app.js
+  - package.json
+  - .env
+  - Dockerfile (broken version)
+  - k8s/deployment.yaml
+  - k8s/service.yaml
+
+outputs:
+  - Running container serving correct message.
+  - Kubernetes Deployment running and reachable via NodePort.

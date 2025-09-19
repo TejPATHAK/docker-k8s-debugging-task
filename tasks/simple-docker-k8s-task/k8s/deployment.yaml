@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-docker-k8s-task
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-docker-k8s-task
+  template:
+    metadata:
+      labels:
+        app: simple-docker-k8s-task
+    spec:
+      containers:
+      - name: simple-docker-k8s-task
+        image: simple-docker-k8s-task:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MESSAGE
+          value: "Hello from Kubernetes!"

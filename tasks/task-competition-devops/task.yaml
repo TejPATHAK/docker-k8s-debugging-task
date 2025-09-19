@@ -1,0 +1,42 @@
+context: |
+  A Node.js web application is provided with an intentionally broken Dockerfile.
+  The solver must fix the Dockerfile so the application builds and runs, then
+  deploy the application to Kubernetes using the provided manifests. The task
+  emphasizes deterministic, offline execution and adherence to best practices.
+
+objectives:
+  - Fix Dockerfile so the Docker image builds deterministically without network calls at build time (node_modules are included).
+  - Ensure the container runs and the app responds at the configured port.
+  - Verify Kubernetes manifests (Deployment with 2 replicas, Service exposing 3000, ConfigMap/Secret present, HPA configured).
+  - Provide outputs and logs required by tests.
+
+constraints:
+  max_agent_timeout_sec: 600
+  max_test_timeout_sec: 300
+  language: Node.js (core workload)
+  no_privileged_docker_flags: true
+  deterministic: true
+  offline: true
+  resources:
+    runtime: "<10m"
+    memory: "reasonable"
+
+acceptance_criteria:
+  - Docker image builds successfully -> test_docker_build
+  - Container runs and returns expected output -> test_docker_run
+  - Kubernetes Deployment replicas == 2 -> test_k8s_deployment_replicas
+  - Service exposes port 3000 -> test_k8s_service
+  - HPA min/max replicas 2/5 -> test_hpa_values
+  - ConfigMap and Secret env vars present in pod -> test_env_vars
+  - Repeated builds are deterministic -> test_determinism
+
+inputs:
+  - app.js, package.json, package-lock.json, node_modules/
+  - .env
+  - Kubernetes manifests: deployment.yaml, service.yaml, hpa.yaml
+  - setup.sh, run-tests.sh, tests/test_outputs.py
+
+outputs:
+  - Fixed Dockerfile
+  - Running container responding with configured APP_NAME
+  - Kubernetes objects up and healthy
