@@ -15,8 +15,9 @@ spec:
       containers:
       - name: simple-docker-k8s-task
         image: simple-docker-k8s-task:latest
+        imagePullPolicy: Never
         ports:
-        - containerPort: 3000
+        - containerPort: 4000
         env:
         - name: MESSAGE
           value: "Hello from Kubernetes!"

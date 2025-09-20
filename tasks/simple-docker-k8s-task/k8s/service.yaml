@@ -5,8 +5,9 @@ metadata:
 spec:
   selector:
     app: simple-docker-k8s-task
-  type: NodePort
   ports:
-    - port: 3000
-      targetPort: 3000
-      nodePort: 30080
+    - protocol: TCP
+      port: 3000        # external port
+      targetPort: 4000  # container port
+  type: ClusterIP
+

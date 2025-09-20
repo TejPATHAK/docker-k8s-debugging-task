@@ -1,7 +1,9 @@
-# BROKEN Dockerfile (must be fixed by solver)
-FROM alpine:latest
+FROM node:18-alpine
 
 WORKDIR /app
+COPY package*.json ./
+RUN npm install --only=production
 COPY . .
-
-# Missing Node.js install and start command
+EXPOSE 3000
+ENV MESSAGE="Hello from container!"
+CMD ["node", "app.js"]
