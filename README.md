@@ -1,4 +1,4 @@
-# Simple Docker + Kubernetes Task
+# Docker + Kubernetes Debugging Task
 
 Task Summary
 
